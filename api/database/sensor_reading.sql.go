@@ -12,8 +12,8 @@ import (
 )
 
 const createSensorReading = `-- name: CreateSensorReading :one
-INSERT INTO sensor_readings (sensor_id, temperature, humidity, pressure)
-VALUES ($1, $2, $3, $4 )
+INSERT INTO sensor_readings (sensor_id, temperature, humidity)
+VALUES ($1, $2, $3 )
 RETURNING reading_timestamp, sensor_id, temperature, humidity, pressure
 `
 
@@ -21,16 +21,10 @@ type CreateSensorReadingParams struct {
 	SensorID    pgtype.Int4   `json:"sensor_id"`
 	Temperature pgtype.Float8 `json:"temperature"`
 	Humidity    pgtype.Float8 `json:"humidity"`
-	Pressure    pgtype.Float8 `json:"pressure"`
 }
 
 func (q *Queries) CreateSensorReading(ctx context.Context, arg CreateSensorReadingParams) (SensorReading, error) {
-	row := q.db.QueryRow(ctx, createSensorReading,
-		arg.SensorID,
-		arg.Temperature,
-		arg.Humidity,
-		arg.Pressure,
-	)
+	row := q.db.QueryRow(ctx, createSensorReading, arg.SensorID, arg.Temperature, arg.Humidity)
 	var i SensorReading
 	err := row.Scan(
 		&i.ReadingTimestamp,
@@ -40,6 +34,45 @@ func (q *Queries) CreateSensorReading(ctx context.Context, arg CreateSensorReadi
 		&i.Pressure,
 	)
 	return i, err
+}
+
+const getSensorReading = `-- name: GetSensorReading :many
+SELECT reading_timestamp, sensor_id, temperature, humidity, pressure 
+FROM sensor_readings
+WHERE sensor_id = $1
+LIMIT $2 OFFSET $3
+`
+
+type GetSensorReadingParams struct {
+	SensorID pgtype.Int4 `json:"sensor_id"`
+	Limit    int32       `json:"limit"`
+	Offset   int32       `json:"offset"`
+}
+
+func (q *Queries) GetSensorReading(ctx context.Context, arg GetSensorReadingParams) ([]SensorReading, error) {
+	rows, err := q.db.Query(ctx, getSensorReading, arg.SensorID, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SensorReading
+	for rows.Next() {
+		var i SensorReading
+		if err := rows.Scan(
+			&i.ReadingTimestamp,
+			&i.SensorID,
+			&i.Temperature,
+			&i.Humidity,
+			&i.Pressure,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const getSensorReadingDaily = `-- name: GetSensorReadingDaily :many

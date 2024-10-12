@@ -27,6 +27,15 @@ func (s *Server) RegisterRoutes() http.Handler {
 		sensor_metadata.PUT("/:id", s.UpdateSensorMetadataHandler)
 		sensor_metadata.DELETE("/:id", s.DeleteSensorMetdataHandler)
 	}
+
+	sensor_readings := v1.Group("/sensor_reading")
+	{
+		sensor_readings.GET("/:id", s.GetSensorReadingsHandler)
+		sensor_readings.GET("/minute/", s.GetSensorReadingsMinutesHandler)
+		sensor_readings.GET("/hour/", s.GetSensorReadingsHourlyHandler)
+		sensor_readings.GET("/day/", s.GetSensorReadingsDailyHandler)
+		sensor_readings.POST("/", s.CreateSensorReadingHandler)
+	}
 	return r
 }
 
