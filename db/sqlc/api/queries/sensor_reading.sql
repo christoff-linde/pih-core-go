@@ -1,7 +1,13 @@
 -- name: CreateSensorReading :one
-INSERT INTO sensor_readings (sensor_id, temperature, humidity, pressure)
-VALUES ($1, $2, $3, $4 )
+INSERT INTO sensor_readings (sensor_id, temperature, humidity)
+VALUES ($1, $2, $3 )
 RETURNING *;
+
+-- name: GetSensorReading :many
+SELECT * 
+FROM sensor_readings
+WHERE sensor_id = $1
+LIMIT $2 OFFSET $3;
 
 -- name: GetSensorReadingMinutes :many
 SELECT * 
