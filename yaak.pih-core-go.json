@@ -1,0 +1,567 @@
+{
+  "yaakVersion": "2024.10.1",
+  "yaakSchema": 2,
+  "timestamp": "2024-10-13T11:55:40.516023",
+  "resources": {
+    "workspaces": [
+      {
+        "model": "workspace",
+        "id": "wk_ih1VewHaDd",
+        "createdAt": "2024-10-01T18:19:31",
+        "updatedAt": "2024-10-03T19:06:59",
+        "name": "pih-core-go",
+        "description": "",
+        "variables": [
+          {
+            "enabled": true,
+            "name": "base_url",
+            "value": "http://localhost:8080/v1"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ],
+        "settingValidateCertificates": true,
+        "settingFollowRedirects": true,
+        "settingRequestTimeout": 0
+      }
+    ],
+    "environments": [],
+    "folders": [
+      {
+        "model": "folder",
+        "id": "fl_PQ9i7bdZd9",
+        "createdAt": "2024-10-12T15:43:19",
+        "updatedAt": "2024-10-12T15:43:22",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_N7KQclTYOR",
+        "name": "sensor_reading",
+        "sortPriority": 2000.0
+      },
+      {
+        "model": "folder",
+        "id": "fl_h9RsN2IgYp",
+        "createdAt": "2024-10-07T16:27:30",
+        "updatedAt": "2024-10-12T15:43:22",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_N7KQclTYOR",
+        "name": "sensor_metadata",
+        "sortPriority": 1000.0
+      },
+      {
+        "model": "folder",
+        "id": "fl_wXeIbCK2Li",
+        "createdAt": "2024-10-01T18:19:49",
+        "updatedAt": "2024-10-12T16:01:47",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_N7KQclTYOR",
+        "name": "sensor",
+        "sortPriority": 500.0
+      },
+      {
+        "model": "folder",
+        "id": "fl_N7KQclTYOR",
+        "createdAt": "2024-10-01T18:19:39",
+        "updatedAt": "2024-10-01T18:19:39",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": null,
+        "name": "v1",
+        "sortPriority": -1727806800000.0
+      }
+    ],
+    "httpRequests": [
+      {
+        "model": "http_request",
+        "id": "rq_hQPy7qUwys",
+        "createdAt": "2024-10-12T16:01:33",
+        "updatedAt": "2024-10-12T16:11:03",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {
+          "text": "{\n  \"sensor_id\": 1,\n  \"temperature\": 25,\n  \"humidity\": 54.2\n}"
+        },
+        "bodyType": "application/json",
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "name": "CreateSensorReading",
+        "sortPriority": 0.0,
+        "url": "${[ base_url ]}/sensor_reading",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_6CVcqOPBT7",
+        "createdAt": "2024-10-12T15:55:55",
+        "updatedAt": "2024-10-12T16:01:57",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorReadings",
+        "sortPriority": 1000.0,
+        "url": "${[ base_url ]}/sensor_reading/:id",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "0"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_g9hFwCYbfZ",
+        "createdAt": "2024-10-12T15:55:54",
+        "updatedAt": "2024-10-12T16:01:57",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorReadingsMinutely",
+        "sortPriority": 2000.0,
+        "url": "${[ base_url ]}/sensor_reading/minute",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "0"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_1u6vSUAoEf",
+        "createdAt": "2024-10-12T15:55:54",
+        "updatedAt": "2024-10-12T16:01:57",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorReadingsHourly",
+        "sortPriority": 3000.0,
+        "url": "${[ base_url ]}/sensor_reading/hour",
+        "urlParameters": [
+          {
+            "enabled": false,
+            "name": ":id",
+            "value": "1"
+          },
+          {
+            "enabled": false,
+            "name": "limit",
+            "value": "1000"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_mY5YKEaNTu",
+        "createdAt": "2024-10-12T15:43:30",
+        "updatedAt": "2024-10-12T16:01:57",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorReadingsDaily",
+        "sortPriority": 4000.0,
+        "url": "${[ base_url ]}/sensor_reading/day",
+        "urlParameters": [
+          {
+            "enabled": false,
+            "name": ":id",
+            "value": "0"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_oxhadbKxFH",
+        "createdAt": "2024-10-07T16:55:46",
+        "updatedAt": "2024-10-07T16:56:40",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_h9RsN2IgYp",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "DELETE",
+        "name": "DeleteSensorMetadata",
+        "sortPriority": 4000.0,
+        "url": "${[ base_url ]}/sensor_metadata/:id",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "0"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_GWgYiKSrdx",
+        "createdAt": "2024-10-07T16:53:07",
+        "updatedAt": "2024-10-07T16:55:49",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_h9RsN2IgYp",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {
+          "text": "{\n  \"sensor_id\": 1,\n  \"sensor_type\": \"ESP32\",\n  \"manufacturer\": \"DF Robot\",\n  \"model_number\": \"ESP32-01-DF-02\",\n  \"sensor_location\": \"Bathroom\",\n  \"additional_data\": null\n}"
+        },
+        "bodyType": "application/json",
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "name": "UpdateSensorMetadata",
+        "sortPriority": 0.0,
+        "url": "${[ base_url ]}/sensor_metadata/:id",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "1"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_hbiJerEVej",
+        "createdAt": "2024-10-07T16:42:04",
+        "updatedAt": "2024-10-07T16:55:49",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_h9RsN2IgYp",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {
+          "text": "{\n  \"sensor_id\": 2,\n  \"sensor_type\": \"ESP32\",\n  \"manufacturer\": \"DF Robot\",\n  \"model_number\": \"ESP32-01-DF-02\",\n  \"sensor_location\": \"Bathroom\",\n  \"additional_data\": null\n}"
+        },
+        "bodyType": "application/json",
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "name": "CreateSensorMetadata",
+        "sortPriority": 1000.0,
+        "url": "${[ base_url ]}/sensor_metadata",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_hdA6nWuu5f",
+        "createdAt": "2024-10-07T16:30:49",
+        "updatedAt": "2024-10-07T16:55:49",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_h9RsN2IgYp",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorMetadataById",
+        "sortPriority": 2000.0,
+        "url": "${[ base_url ]}/sensor_metadata/:sensor_id",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":sensor_id",
+            "value": "2"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_RnxFAr4voW",
+        "createdAt": "2024-10-07T16:27:39",
+        "updatedAt": "2024-10-07T16:55:49",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_h9RsN2IgYp",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorMetadata",
+        "sortPriority": 3000.0,
+        "url": "${[ base_url ]}/sensor_metadata?limit=10&offset=0",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_JkBm2JXFlp",
+        "createdAt": "2024-10-02T18:33:33",
+        "updatedAt": "2024-10-12T16:01:54",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_wXeIbCK2Li",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {
+          "text": "{\n  \"id\": 71,\n  \"sensor_name\": \"Yeet\"\n}"
+        },
+        "bodyType": "application/json",
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "name": "UpdateSensor",
+        "sortPriority": 1000.0,
+        "url": "${[ base_url ]}/sensors/:id",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "71"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_BD4XYUHAyX",
+        "createdAt": "2024-10-01T20:13:23",
+        "updatedAt": "2024-10-12T16:01:54",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_wXeIbCK2Li",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "DELETE",
+        "name": "DeleteSensor",
+        "sortPriority": 2000.0,
+        "url": "${[ base_url ]}/sensors/:id",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "71"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_F9ZkdJN5w9",
+        "createdAt": "2024-10-01T19:47:12",
+        "updatedAt": "2024-10-12T16:01:54",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_wXeIbCK2Li",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {
+          "text": "{\n  \"sensor_name\": \"YeetusDeletus\"\n}"
+        },
+        "bodyType": "application/json",
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "name": "CreateSensor",
+        "sortPriority": 3000.0,
+        "url": "${[ base_url ]}/sensors",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_9N32uJDqOZ",
+        "createdAt": "2024-10-01T19:05:43",
+        "updatedAt": "2024-10-12T16:01:54",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_wXeIbCK2Li",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorByName",
+        "sortPriority": 4000.0,
+        "url": "${[ base_url ]}/sensor/:name",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":name",
+            "value": ""
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_47rRdPYHV8",
+        "createdAt": "2024-10-01T19:03:52",
+        "updatedAt": "2024-10-12T16:01:54",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_wXeIbCK2Li",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensors",
+        "sortPriority": 5000.0,
+        "url": "${[ base_url ]}/sensors",
+        "urlParameters": [
+          {
+            "enabled": false,
+            "name": ":sensor_id",
+            "value": "1"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_7g3iv3Pyn3",
+        "createdAt": "2024-10-01T18:19:52",
+        "updatedAt": "2024-10-13T11:50:48",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_wXeIbCK2Li",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorById",
+        "sortPriority": 6000.0,
+        "url": "${[ base_url ]}/sensors/:id",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "2"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "grpcRequests": []
+  }
+}
