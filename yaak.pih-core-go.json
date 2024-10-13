@@ -1,7 +1,7 @@
 {
   "yaakVersion": "2024.10.1",
   "yaakSchema": 2,
-  "timestamp": "2024-10-07T17:41:45.442205",
+  "timestamp": "2024-10-13T11:55:40.516023",
   "resources": {
     "workspaces": [
       {
@@ -32,9 +32,19 @@
     "folders": [
       {
         "model": "folder",
+        "id": "fl_PQ9i7bdZd9",
+        "createdAt": "2024-10-12T15:43:19",
+        "updatedAt": "2024-10-12T15:43:22",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_N7KQclTYOR",
+        "name": "sensor_reading",
+        "sortPriority": 2000.0
+      },
+      {
+        "model": "folder",
         "id": "fl_h9RsN2IgYp",
         "createdAt": "2024-10-07T16:27:30",
-        "updatedAt": "2024-10-07T16:27:43",
+        "updatedAt": "2024-10-12T15:43:22",
         "workspaceId": "wk_ih1VewHaDd",
         "folderId": "fl_N7KQclTYOR",
         "name": "sensor_metadata",
@@ -44,11 +54,11 @@
         "model": "folder",
         "id": "fl_wXeIbCK2Li",
         "createdAt": "2024-10-01T18:19:49",
-        "updatedAt": "2024-10-07T16:27:43",
+        "updatedAt": "2024-10-12T16:01:47",
         "workspaceId": "wk_ih1VewHaDd",
         "folderId": "fl_N7KQclTYOR",
         "name": "sensor",
-        "sortPriority": 0.0
+        "sortPriority": 500.0
       },
       {
         "model": "folder",
@@ -62,6 +72,159 @@
       }
     ],
     "httpRequests": [
+      {
+        "model": "http_request",
+        "id": "rq_hQPy7qUwys",
+        "createdAt": "2024-10-12T16:01:33",
+        "updatedAt": "2024-10-12T16:11:03",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {
+          "text": "{\n  \"sensor_id\": 1,\n  \"temperature\": 25,\n  \"humidity\": 54.2\n}"
+        },
+        "bodyType": "application/json",
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "name": "CreateSensorReading",
+        "sortPriority": 0.0,
+        "url": "${[ base_url ]}/sensor_reading",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_6CVcqOPBT7",
+        "createdAt": "2024-10-12T15:55:55",
+        "updatedAt": "2024-10-12T16:01:57",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorReadings",
+        "sortPriority": 1000.0,
+        "url": "${[ base_url ]}/sensor_reading/:id",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "0"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_g9hFwCYbfZ",
+        "createdAt": "2024-10-12T15:55:54",
+        "updatedAt": "2024-10-12T16:01:57",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorReadingsMinutely",
+        "sortPriority": 2000.0,
+        "url": "${[ base_url ]}/sensor_reading/minute",
+        "urlParameters": [
+          {
+            "enabled": true,
+            "name": ":id",
+            "value": "0"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_1u6vSUAoEf",
+        "createdAt": "2024-10-12T15:55:54",
+        "updatedAt": "2024-10-12T16:01:57",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorReadingsHourly",
+        "sortPriority": 3000.0,
+        "url": "${[ base_url ]}/sensor_reading/hour",
+        "urlParameters": [
+          {
+            "enabled": false,
+            "name": ":id",
+            "value": "1"
+          },
+          {
+            "enabled": false,
+            "name": "limit",
+            "value": "1000"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "model": "http_request",
+        "id": "rq_mY5YKEaNTu",
+        "createdAt": "2024-10-12T15:43:30",
+        "updatedAt": "2024-10-12T16:01:57",
+        "workspaceId": "wk_ih1VewHaDd",
+        "folderId": "fl_PQ9i7bdZd9",
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetSensorReadingsDaily",
+        "sortPriority": 4000.0,
+        "url": "${[ base_url ]}/sensor_reading/day",
+        "urlParameters": [
+          {
+            "enabled": false,
+            "name": ":id",
+            "value": "0"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ]
+      },
       {
         "model": "http_request",
         "id": "rq_oxhadbKxFH",
@@ -217,7 +380,7 @@
         "model": "http_request",
         "id": "rq_JkBm2JXFlp",
         "createdAt": "2024-10-02T18:33:33",
-        "updatedAt": "2024-10-02T18:50:51",
+        "updatedAt": "2024-10-12T16:01:54",
         "workspaceId": "wk_ih1VewHaDd",
         "folderId": "fl_wXeIbCK2Li",
         "authentication": {},
@@ -235,7 +398,7 @@
         ],
         "method": "PUT",
         "name": "UpdateSensor",
-        "sortPriority": 0.0,
+        "sortPriority": 1000.0,
         "url": "${[ base_url ]}/sensors/:id",
         "urlParameters": [
           {
@@ -254,7 +417,7 @@
         "model": "http_request",
         "id": "rq_BD4XYUHAyX",
         "createdAt": "2024-10-01T20:13:23",
-        "updatedAt": "2024-10-02T18:51:32",
+        "updatedAt": "2024-10-12T16:01:54",
         "workspaceId": "wk_ih1VewHaDd",
         "folderId": "fl_wXeIbCK2Li",
         "authentication": {},
@@ -264,7 +427,7 @@
         "headers": [],
         "method": "DELETE",
         "name": "DeleteSensor",
-        "sortPriority": 0.0,
+        "sortPriority": 2000.0,
         "url": "${[ base_url ]}/sensors/:id",
         "urlParameters": [
           {
@@ -283,7 +446,7 @@
         "model": "http_request",
         "id": "rq_F9ZkdJN5w9",
         "createdAt": "2024-10-01T19:47:12",
-        "updatedAt": "2024-10-01T20:29:56",
+        "updatedAt": "2024-10-12T16:01:54",
         "workspaceId": "wk_ih1VewHaDd",
         "folderId": "fl_wXeIbCK2Li",
         "authentication": {},
@@ -301,7 +464,7 @@
         ],
         "method": "POST",
         "name": "CreateSensor",
-        "sortPriority": 0.0,
+        "sortPriority": 3000.0,
         "url": "${[ base_url ]}/sensors",
         "urlParameters": [
           {
@@ -315,7 +478,7 @@
         "model": "http_request",
         "id": "rq_9N32uJDqOZ",
         "createdAt": "2024-10-01T19:05:43",
-        "updatedAt": "2024-10-01T19:06:13",
+        "updatedAt": "2024-10-12T16:01:54",
         "workspaceId": "wk_ih1VewHaDd",
         "folderId": "fl_wXeIbCK2Li",
         "authentication": {},
@@ -325,7 +488,7 @@
         "headers": [],
         "method": "GET",
         "name": "GetSensorByName",
-        "sortPriority": 0.0,
+        "sortPriority": 4000.0,
         "url": "${[ base_url ]}/sensor/:name",
         "urlParameters": [
           {
@@ -344,7 +507,7 @@
         "model": "http_request",
         "id": "rq_47rRdPYHV8",
         "createdAt": "2024-10-01T19:03:52",
-        "updatedAt": "2024-10-02T19:33:02",
+        "updatedAt": "2024-10-12T16:01:54",
         "workspaceId": "wk_ih1VewHaDd",
         "folderId": "fl_wXeIbCK2Li",
         "authentication": {},
@@ -354,7 +517,7 @@
         "headers": [],
         "method": "GET",
         "name": "GetSensors",
-        "sortPriority": 0.0,
+        "sortPriority": 5000.0,
         "url": "${[ base_url ]}/sensors",
         "urlParameters": [
           {
@@ -373,7 +536,7 @@
         "model": "http_request",
         "id": "rq_7g3iv3Pyn3",
         "createdAt": "2024-10-01T18:19:52",
-        "updatedAt": "2024-10-01T19:26:53",
+        "updatedAt": "2024-10-13T11:50:48",
         "workspaceId": "wk_ih1VewHaDd",
         "folderId": "fl_wXeIbCK2Li",
         "authentication": {},
@@ -383,13 +546,13 @@
         "headers": [],
         "method": "GET",
         "name": "GetSensorById",
-        "sortPriority": 0.0,
+        "sortPriority": 6000.0,
         "url": "${[ base_url ]}/sensors/:id",
         "urlParameters": [
           {
             "enabled": true,
             "name": ":id",
-            "value": "1"
+            "value": "2"
           },
           {
             "enabled": true,
