@@ -1,55 +1,27 @@
 set dotenv-load := true
 
 # Define variables
-
-API_DIR := "api"
+SERVER_DIR := "cmd/server"
+SUBSCRIBER_DIR := "cmd/subscriber"
 CONSUMER_DIR := "consumer"
 DB_DIR := "db"
-API_SQLC_DIR := "db/sqlc/api"
-CONSUMER_SQLC_DIR := "db/sqlc/consumer"
 MIGRATIONS_DIR := "db/schema"
 
 default:
     just --fmt --unstable
     just --list
 
-# build the api service
-build-api:
-    cd {{ API_DIR }} && go build -o bin/api cmd/main.go
-
-# build the consumer service
-build-consumer:
-    cd {{ CONSUMER_DIR }} && go build -o bin/consumer main.go
-
-# run the api service
-run-api:
-    cd {{ API_DIR }} && go run cmd/main.go
-
-# run the consumer service
-run-consumer:
-    cd {{ CONSUMER_DIR }} && go run main.go
-
 # clean all build artifacts
 clean:
-    rm -rf {{ API_DIR }}/bin
-    rm -rf {{ CONSUMER_DIR }}/bin
+    rm -rf bin
 
 # build all services
-build: build-api build-consumer
+build:
+    go build  -o bin/pih-core main.go
 
 # run all services
-run: run-api run-consumer
-
-# generate sqlc code for api service
-sqlcgen-api:
-    cd {{ API_SQLC_DIR }} && sqlc generate
-
-# generate sqlc code for consumer service
-sqlcgen-consumer:
-    cd {{ CONSUMER_SQLC_DIR }} && sqlc generate
-
-# generate sqlc code for all services
-sqlcgen: sqlcgen-api sqlcgen-consumer
+run:
+    go run .
 
 # apply all db migrations
 goose-up:
@@ -69,9 +41,8 @@ goose-create name:
 
 # vendor all dependencies
 vendor:
-    go work vendor
+    go mod vendor
 
 # run go mod tidy on all services
 tidy:
-    cd {{ API_DIR }} && go mod tidy
-    cd {{ CONSUMER_DIR }} && go mod tidy
+    go mod tidy
