@@ -1,9 +1,7 @@
 set dotenv-load := true
 
 # Define variables
-SERVER_DIR := "cmd/server"
-SUBSCRIBER_DIR := "cmd/subscriber"
-CONSUMER_DIR := "consumer"
+
 DB_DIR := "db"
 MIGRATIONS_DIR := "db/schema"
 
@@ -21,7 +19,7 @@ build:
 
 # run all services
 run:
-    go run .
+    air -c .air.toml
 
 # apply all db migrations
 goose-up:
