@@ -20,3 +20,4 @@ RETURNING *;
 
 -- name: DeleteSensor :execresult
 DELETE FROM sensors WHERE id=$1;
+
