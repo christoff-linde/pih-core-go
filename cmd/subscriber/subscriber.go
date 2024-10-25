@@ -43,8 +43,10 @@ func StartSubscriber(appCfg AppConfig, brokerUrl string) {
 	failOnError(err, "Failed to declare iot queue")
 
 	err = channel.QueueBind(iotQueue.Name, "pih", "iot", false, nil)
+	failOnError(err, "Failed to bind iot queue")
 
 	iotMsgs, err := channel.ConsumeWithContext(context.Background(), iotQueue.Name, "", true, false, false, false, nil)
+	failOnError(err, "Failed to register a consumer")
 
 	var forever chan struct{}
 
