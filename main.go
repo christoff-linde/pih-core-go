@@ -27,7 +27,7 @@ func initDb(databaseUrl string) *db.Queries {
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file", err)
+		log.Println("Error loading .env file", err)
 	}
 
 	brokerUrl := os.Getenv("BROKER_URL")
@@ -44,5 +44,4 @@ func main() {
 	port, _ := strconv.Atoi(os.Getenv("API_PORT"))
 	server := http.NewServer(port, dbConn)
 	log.Fatal(server.ListenAndServe())
-
 }
