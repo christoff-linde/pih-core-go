@@ -9,12 +9,17 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
+    container_name: pih-core-go
     build:
       context: .
       target: final
+      tags:
+        - pih-core-go:latest
+        - pih-core-go:0.1.0
+    env_file:
+      - .env
     ports:
       - 8080:8080
-
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
