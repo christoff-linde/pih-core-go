@@ -17,6 +17,10 @@ clean:
 build:
     go build  -o bin/pih-core main.go
 
+# build docker image
+dockerbuild:
+    docker compose build
+
 # run all services
 run:
     air -c .air.toml
