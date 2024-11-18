@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file. See [conven
 
 ### Miscellaneous Chores
 
+- **(workflows)** update changelog action to run on new tag & on manual trigger (#36) - ([18621b1](https://github.com/cocogitto/cocogitto/commit/18621b1379e956a9733f9f76709e712b939416ea)) - Christoff Linde
+
+---
+## [0.1.1](https://github.com/cocogitto/cocogitto/compare/0.1.0..0.1.1) - 2024-11-18
+
+### Miscellaneous Chores
+
 - update changelog - ([c5b7996](https://github.com/cocogitto/cocogitto/commit/c5b79962aeccccebf997f510392dec8f8c1c1a8d)) - christoff-linde
 
 ---
