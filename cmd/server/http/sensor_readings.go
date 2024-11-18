@@ -80,7 +80,6 @@ func (s *Server) GetSensorReadingsHandler(c *gin.Context) {
 func (s *Server) GetSensorReadingsMinutesHandler(c *gin.Context) {
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "60"))
 	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
-	nextOffset := offset + limit
 
 	sensorReadings, err := s.db.GetSensorReadingMinutes(c, db.GetSensorReadingMinutesParams{
 		Limit:  int32(limit),
@@ -90,7 +89,12 @@ func (s *Server) GetSensorReadingsMinutesHandler(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
+	nextOffset := 0
 	if sensorReadings == nil {
+		nextOffset = 0
+	} else if limit <= len(sensorReadings) {
+		nextOffset = len(sensorReadings)
+	} else if limit >= len(sensorReadings) {
 		nextOffset = 0
 	}
 

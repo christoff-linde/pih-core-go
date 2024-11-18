@@ -12,7 +12,6 @@ import (
 func (s *Server) GetSensorMetadataHandler(c *gin.Context) {
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "20"))
 	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
-	nextOffset := offset + limit
 
 	sensor_metadata, err := s.db.GetSensorMetadata(c, db.GetSensorMetadataParams{
 		Limit:  int32(limit),
@@ -22,7 +21,12 @@ func (s *Server) GetSensorMetadataHandler(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
+	nextOffset := 0
 	if sensor_metadata == nil {
+		nextOffset = 0
+	} else if limit <= len(sensor_metadata) {
+		nextOffset = len(sensor_metadata)
+	} else if limit >= len(sensor_metadata) {
 		nextOffset = 0
 	}
 
