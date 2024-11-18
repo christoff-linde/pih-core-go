@@ -14,7 +14,6 @@ import (
 func (s *Server) GetSensorsHandler(c *gin.Context) {
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "20"))
 	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
-	nextOffset := offset + limit
 
 	sensors, err := s.db.GetSensors(c, db.GetSensorsParams{
 		Limit:  int32(limit),
@@ -24,7 +23,12 @@ func (s *Server) GetSensorsHandler(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
+	nextOffset := 0
 	if sensors == nil {
+		nextOffset = 0
+	} else if limit <= len(sensors) {
+		nextOffset = len(sensors)
+	} else if limit >= len(sensors) {
 		nextOffset = 0
 	}
 
