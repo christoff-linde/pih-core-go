@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 ---
+## [unreleased]
+
+### Miscellaneous Chores
+
+- update changelog - ([c5b7996](https://github.com/cocogitto/cocogitto/commit/c5b79962aeccccebf997f510392dec8f8c1c1a8d)) - christoff-linde
+
+---
 ## [0.1.0] - 2024-11-18
 
 ### Bug Fixes
