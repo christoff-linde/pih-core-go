@@ -12,24 +12,30 @@ import (
 )
 
 const createSensorReading = `-- name: CreateSensorReading :one
-INSERT INTO sensor_readings (sensor_id, temperature, humidity)
-VALUES ($1, $2, $3)
+INSERT INTO sensor_readings (reading_timestamp, sensor_id, temperature, humidity)
+VALUES ($1, $2, $3, $4)
 RETURNING reading_timestamp, sensor_id, temperature, humidity, pressure
 `
 
 type CreateSensorReadingParams struct {
-	SensorID    pgtype.Int4   `db:"sensor_id" json:"sensor_id"`
-	Temperature pgtype.Float8 `db:"temperature" json:"temperature"`
-	Humidity    pgtype.Float8 `db:"humidity" json:"humidity"`
+	ReadingTimestamp pgtype.Timestamptz `db:"reading_timestamp" json:"reading_timestamp"`
+	SensorID         pgtype.Int4        `db:"sensor_id" json:"sensor_id"`
+	Temperature      pgtype.Float8      `db:"temperature" json:"temperature"`
+	Humidity         pgtype.Float8      `db:"humidity" json:"humidity"`
 }
 
 // CreateSensorReading
 //
-//	INSERT INTO sensor_readings (sensor_id, temperature, humidity)
-//	VALUES ($1, $2, $3)
+//	INSERT INTO sensor_readings (reading_timestamp, sensor_id, temperature, humidity)
+//	VALUES ($1, $2, $3, $4)
 //	RETURNING reading_timestamp, sensor_id, temperature, humidity, pressure
 func (q *Queries) CreateSensorReading(ctx context.Context, arg CreateSensorReadingParams) (SensorReading, error) {
-	row := q.db.QueryRow(ctx, createSensorReading, arg.SensorID, arg.Temperature, arg.Humidity)
+	row := q.db.QueryRow(ctx, createSensorReading,
+		arg.ReadingTimestamp,
+		arg.SensorID,
+		arg.Temperature,
+		arg.Humidity,
+	)
 	var i SensorReading
 	err := row.Scan(
 		&i.ReadingTimestamp,
