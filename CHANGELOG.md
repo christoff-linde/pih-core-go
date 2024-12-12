@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file. See [conven
 
 ### Miscellaneous Chores
 
+- **(deps)** bump golang.org/x/crypto from 0.27.0 to 0.31.0 in the go_modules group across 1 directory (#39) - ([e43d22d](https://github.com/cocogitto/cocogitto/commit/e43d22dc44a392833eadafb3cb85d19b81be580c)) - dependabot[bot]
+
+---
+## [0.1.2](https://github.com/cocogitto/cocogitto/compare/0.1.1..0.1.2) - 2024-12-12
+
+### Miscellaneous Chores
+
 - **(workflows)** update changelog action to run on new tag & on manual trigger (#36) - ([18621b1](https://github.com/cocogitto/cocogitto/commit/18621b1379e956a9733f9f76709e712b939416ea)) - Christoff Linde
 
 ---
