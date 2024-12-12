@@ -14,8 +14,8 @@ services:
       context: .
       target: final
       tags:
-        - pih-core-go:latest
-        - pih-core-go:0.1.0
+        - christofflinde/pih-core-go:latest
+        - christofflinde/pih-core-go:0.1.2
     env_file:
       - .env
     ports:
@@ -52,4 +52,3 @@ services:
 # secrets:
 #   db-password:
 #     file: db/password.txt
-
