@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 ---
-## [unreleased]
+## [0.1.2](https://github.com/cocogitto/cocogitto/compare/0.1.1..0.1.2) - 2024-12-12
 
 ### Miscellaneous Chores
 
