@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 ---
+## [unreleased]
+
+### Miscellaneous Chores
+
+- **(deps)** bump golang.org/x/crypto from 0.27.0 to 0.31.0 in the go_modules group across 1 directory (#39) - ([e43d22d](https://github.com/cocogitto/cocogitto/commit/e43d22dc44a392833eadafb3cb85d19b81be580c)) - dependabot[bot]
+
+---
 ## [0.1.2](https://github.com/cocogitto/cocogitto/compare/0.1.1..0.1.2) - 2024-12-12
 
 ### Miscellaneous Chores
