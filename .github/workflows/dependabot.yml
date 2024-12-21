@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "gomod" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    commit-message:
+      # Prefix all commit messages with "npm: "
+      prefix: "chore"
+    reviewers:
+      - "octocat"
+      - "christoff-linde"
+    open-pull-requests-limit: 5
+    versioning-strategy: "increase-if-necessary"
