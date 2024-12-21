@@ -24,6 +24,24 @@ SELECT *
 FROM sensor_readings_daily
 LIMIT $1 OFFSET $2;
 
+-- name: GetSensorReadingMinutesById :many
+SELECT *
+FROM sensor_readings_minutes
+WHERE sensor_id = $1
+LIMIT $2 OFFSET $3;
+
+-- name: GetSensorReadingHourlyById :many
+SELECT *
+FROM sensor_readings_hourly
+WHERE sensor_id = $1
+LIMIT $2 OFFSET $3;
+
+-- name: GetSensorReadingDailById :many
+SELECT *
+FROM sensor_readings_daily
+WHERE sensor_id = $1
+LIMIT $2 OFFSET $3;
+
 
 
 ---- name: SelectSensorReadings :many

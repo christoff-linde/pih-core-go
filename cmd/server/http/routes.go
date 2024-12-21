@@ -34,6 +34,9 @@ func (s *Server) RegisterRoutes() http.Handler {
 		sensor_readings.GET("/minute/", s.GetSensorReadingsMinutesHandler)
 		sensor_readings.GET("/hour/", s.GetSensorReadingsHourlyHandler)
 		sensor_readings.GET("/day/", s.GetSensorReadingsDailyHandler)
+		sensor_readings.GET("/minute/:id", s.GetSensorReadingsMinutesByIdHandler)
+		sensor_readings.GET("/hour/:id", s.GetSensorReadingsHourlyByIdHandler)
+		sensor_readings.GET("/day/:id", s.GetSensorReadingsDailyByIdHandler)
 		sensor_readings.POST("/", s.CreateSensorReadingHandler)
 	}
 	return r

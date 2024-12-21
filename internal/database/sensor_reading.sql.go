@@ -92,6 +92,54 @@ func (q *Queries) GetSensorReading(ctx context.Context, arg GetSensorReadingPara
 	return items, nil
 }
 
+const getSensorReadingDailById = `-- name: GetSensorReadingDailById :many
+SELECT day, sensor_id, min_temperature, avg_temperature, max_temperature, min_humidity, avg_humidity, max_humidity
+FROM sensor_readings_daily
+WHERE sensor_id = $1
+LIMIT $2 OFFSET $3
+`
+
+type GetSensorReadingDailByIdParams struct {
+	SensorID pgtype.Int4 `db:"sensor_id" json:"sensor_id"`
+	Limit    int32       `db:"limit" json:"limit"`
+	Offset   int32       `db:"offset" json:"offset"`
+}
+
+// GetSensorReadingDailById
+//
+//	SELECT day, sensor_id, min_temperature, avg_temperature, max_temperature, min_humidity, avg_humidity, max_humidity
+//	FROM sensor_readings_daily
+//	WHERE sensor_id = $1
+//	LIMIT $2 OFFSET $3
+func (q *Queries) GetSensorReadingDailById(ctx context.Context, arg GetSensorReadingDailByIdParams) ([]SensorReadingsDaily, error) {
+	rows, err := q.db.Query(ctx, getSensorReadingDailById, arg.SensorID, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SensorReadingsDaily
+	for rows.Next() {
+		var i SensorReadingsDaily
+		if err := rows.Scan(
+			&i.Day,
+			&i.SensorID,
+			&i.MinTemperature,
+			&i.AvgTemperature,
+			&i.MaxTemperature,
+			&i.MinHumidity,
+			&i.AvgHumidity,
+			&i.MaxHumidity,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getSensorReadingDaily = `-- name: GetSensorReadingDaily :many
 SELECT day, sensor_id, min_temperature, avg_temperature, max_temperature, min_humidity, avg_humidity, max_humidity
 FROM sensor_readings_daily
@@ -182,6 +230,54 @@ func (q *Queries) GetSensorReadingHourly(ctx context.Context, arg GetSensorReadi
 	return items, nil
 }
 
+const getSensorReadingHourlyById = `-- name: GetSensorReadingHourlyById :many
+SELECT hour, sensor_id, min_temperature, avg_temperature, max_temperature, min_humidity, avg_humidity, max_humidity
+FROM sensor_readings_hourly
+WHERE sensor_id = $1
+LIMIT $2 OFFSET $3
+`
+
+type GetSensorReadingHourlyByIdParams struct {
+	SensorID pgtype.Int4 `db:"sensor_id" json:"sensor_id"`
+	Limit    int32       `db:"limit" json:"limit"`
+	Offset   int32       `db:"offset" json:"offset"`
+}
+
+// GetSensorReadingHourlyById
+//
+//	SELECT hour, sensor_id, min_temperature, avg_temperature, max_temperature, min_humidity, avg_humidity, max_humidity
+//	FROM sensor_readings_hourly
+//	WHERE sensor_id = $1
+//	LIMIT $2 OFFSET $3
+func (q *Queries) GetSensorReadingHourlyById(ctx context.Context, arg GetSensorReadingHourlyByIdParams) ([]SensorReadingsHourly, error) {
+	rows, err := q.db.Query(ctx, getSensorReadingHourlyById, arg.SensorID, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SensorReadingsHourly
+	for rows.Next() {
+		var i SensorReadingsHourly
+		if err := rows.Scan(
+			&i.Hour,
+			&i.SensorID,
+			&i.MinTemperature,
+			&i.AvgTemperature,
+			&i.MaxTemperature,
+			&i.MinHumidity,
+			&i.AvgHumidity,
+			&i.MaxHumidity,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getSensorReadingMinutes = `-- name: GetSensorReadingMinutes :many
 SELECT minute, sensor_id, min_temperature, avg_temperature, max_temperature, min_humidity, avg_humidity, max_humidity
 FROM sensor_readings_minutes
@@ -200,6 +296,54 @@ type GetSensorReadingMinutesParams struct {
 //	LIMIT $1 OFFSET $2
 func (q *Queries) GetSensorReadingMinutes(ctx context.Context, arg GetSensorReadingMinutesParams) ([]SensorReadingsMinute, error) {
 	rows, err := q.db.Query(ctx, getSensorReadingMinutes, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SensorReadingsMinute
+	for rows.Next() {
+		var i SensorReadingsMinute
+		if err := rows.Scan(
+			&i.Minute,
+			&i.SensorID,
+			&i.MinTemperature,
+			&i.AvgTemperature,
+			&i.MaxTemperature,
+			&i.MinHumidity,
+			&i.AvgHumidity,
+			&i.MaxHumidity,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getSensorReadingMinutesById = `-- name: GetSensorReadingMinutesById :many
+SELECT minute, sensor_id, min_temperature, avg_temperature, max_temperature, min_humidity, avg_humidity, max_humidity
+FROM sensor_readings_minutes
+WHERE sensor_id = $1
+LIMIT $2 OFFSET $3
+`
+
+type GetSensorReadingMinutesByIdParams struct {
+	SensorID pgtype.Int4 `db:"sensor_id" json:"sensor_id"`
+	Limit    int32       `db:"limit" json:"limit"`
+	Offset   int32       `db:"offset" json:"offset"`
+}
+
+// GetSensorReadingMinutesById
+//
+//	SELECT minute, sensor_id, min_temperature, avg_temperature, max_temperature, min_humidity, avg_humidity, max_humidity
+//	FROM sensor_readings_minutes
+//	WHERE sensor_id = $1
+//	LIMIT $2 OFFSET $3
+func (q *Queries) GetSensorReadingMinutesById(ctx context.Context, arg GetSensorReadingMinutesByIdParams) ([]SensorReadingsMinute, error) {
+	rows, err := q.db.Query(ctx, getSensorReadingMinutesById, arg.SensorID, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}

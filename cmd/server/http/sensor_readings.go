@@ -2,6 +2,7 @@ package http
 
 import (
 	"fmt"
+	"math"
 	"net/http"
 	"strconv"
 
@@ -132,8 +133,10 @@ func (s *Server) GetSensorReadingsHourlyHandler(c *gin.Context) {
 }
 
 func (s *Server) GetSensorReadingsDailyHandler(c *gin.Context) {
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "7"))
-	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
+	limit64, _ := strconv.ParseInt(c.DefaultQuery("limit", "7"), 10, 32)
+	offset64, _ := strconv.ParseInt(c.DefaultQuery("offset", "0"), 10, 32)
+	limit := int32(limit64)
+	offset := int32(offset64)
 	nextOffset := offset + limit
 
 	sensorReadings, err := s.db.GetSensorReadingDaily(c, db.GetSensorReadingDailyParams{
@@ -145,6 +148,154 @@ func (s *Server) GetSensorReadingsDailyHandler(c *gin.Context) {
 		return
 	}
 	if sensorReadings == nil {
+		nextOffset = 0
+	}
+
+	resp := gin.H{
+		"message":   fmt.Sprintf("Found %d sensor_readings", len(sensorReadings)),
+		"data":      sensorReadings,
+		"next_page": nextOffset,
+	}
+	c.JSON(http.StatusOK, resp)
+}
+
+func (s *Server) GetSensorReadingsMinutesByIdHandler(c *gin.Context) {
+	sensorID64, err := strconv.ParseInt(c.Param("id"), 10, 32)
+	if err != nil || sensorID64 > math.MaxInt32 || sensorID64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid sensor_id parameter", err)})
+		return
+	}
+	sensor_id := int32(sensorID64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid sensor_id parameter", err)})
+		return
+	}
+
+	limit64, err := strconv.ParseInt(c.DefaultQuery("limit", "60"), 10, 32)
+	if err != nil || limit64 > math.MaxInt32 || limit64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid limit parameter", err)})
+		return
+	}
+	limit := int32(limit64)
+
+	offset64, err := strconv.ParseInt(c.DefaultQuery("offset", "0"), 10, 32)
+	if err != nil || offset64 > math.MaxInt32 || offset64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid offset parameter", err)})
+		return
+	}
+	offset := int32(offset64)
+
+	nextOffset := offset + limit
+
+	sensorReadings, err := s.db.GetSensorReadingMinutesById(c, db.GetSensorReadingMinutesByIdParams{
+		SensorID: pgtype.Int4{
+			Int32: int32(sensor_id),
+			Valid: true,
+		},
+		Limit:  int32(limit),
+		Offset: int32(offset),
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+	if sensorReadings == nil {
+		nextOffset = 0
+	} else if int32(len(sensorReadings)) < offset {
+
+		nextOffset = 0
+	}
+	resp := gin.H{
+		"message":   fmt.Sprintf("Found %d sensor_readings", len(sensorReadings)),
+		"data":      sensorReadings,
+		"next_page": nextOffset,
+	}
+	c.JSON(http.StatusOK, resp)
+}
+
+func (s *Server) GetSensorReadingsHourlyByIdHandler(c *gin.Context) {
+	sensorID64, err := strconv.ParseInt(c.Param("id"), 10, 32)
+	if err != nil || sensorID64 > math.MaxInt32 || sensorID64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid sensor_id parameter", err)})
+		return
+	}
+	sensor_id := int32(sensorID64)
+	limit64, err := strconv.ParseInt(c.DefaultQuery("limit", "24"), 10, 32)
+	if err != nil || limit64 > math.MaxInt32 || limit64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid limit parameter", err)})
+		return
+	}
+	limit := int32(limit64)
+	offset64, err := strconv.ParseInt(c.DefaultQuery("offset", "0"), 10, 32)
+	if err != nil || offset64 > math.MaxInt32 || offset64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid offset parameter", err)})
+		return
+	}
+	offset := int32(offset64)
+	nextOffset := offset + limit
+
+	sensorReadings, err := s.db.GetSensorReadingHourlyById(c, db.GetSensorReadingHourlyByIdParams{
+		SensorID: pgtype.Int4{
+			Int32: int32(sensor_id),
+			Valid: true,
+		},
+		Limit:  int32(limit),
+		Offset: int32(offset),
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+	if sensorReadings == nil {
+		nextOffset = 0
+	} else if int32(len(sensorReadings)) < offset {
+		nextOffset = 0
+	}
+
+	resp := gin.H{
+		"message":   fmt.Sprintf("Found %d sensor_readings", len(sensorReadings)),
+		"data":      sensorReadings,
+		"next_page": nextOffset,
+	}
+	c.JSON(http.StatusOK, resp)
+}
+
+func (s *Server) GetSensorReadingsDailyByIdHandler(c *gin.Context) {
+	sensorID64, err := strconv.ParseInt(c.Param("id"), 10, 32)
+	if err != nil || sensorID64 > math.MaxInt32 || sensorID64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid sensor_id parameter", err)})
+		return
+	}
+	sensor_id := int32(sensorID64)
+	limit64, err := strconv.ParseInt(c.DefaultQuery("limit", "7"), 10, 32)
+	if err != nil || limit64 > math.MaxInt32 || limit64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid limit parameter", err)})
+		return
+	}
+	limit := int32(limit64)
+	offset64, err := strconv.ParseInt(c.DefaultQuery("offset", "0"), 10, 32)
+	if err != nil || offset64 > math.MaxInt32 || offset64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid offset parameter", err)})
+		return
+	}
+	offset := int32(offset64)
+	nextOffset := offset + limit
+
+	sensorReadings, err := s.db.GetSensorReadingDailById(c, db.GetSensorReadingDailByIdParams{
+		SensorID: pgtype.Int4{
+			Int32: int32(sensor_id),
+			Valid: true,
+		},
+		Limit:  int32(limit),
+		Offset: int32(offset),
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+	if sensorReadings == nil {
+		nextOffset = 0
+	} else if int32(len(sensorReadings)) < offset {
 		nextOffset = 0
 	}
 
