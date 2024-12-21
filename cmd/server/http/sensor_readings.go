@@ -132,8 +132,10 @@ func (s *Server) GetSensorReadingsHourlyHandler(c *gin.Context) {
 }
 
 func (s *Server) GetSensorReadingsDailyHandler(c *gin.Context) {
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "7"))
-	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
+	limit64, _ := strconv.ParseInt(c.DefaultQuery("limit", "7"), 10, 32)
+	offset64, _ := strconv.ParseInt(c.DefaultQuery("offset", "0"), 10, 32)
+	limit := int32(limit64)
+	offset := int32(offset64)
 	nextOffset := offset + limit
 
 	sensorReadings, err := s.db.GetSensorReadingDaily(c, db.GetSensorReadingDailyParams{
@@ -157,7 +159,12 @@ func (s *Server) GetSensorReadingsDailyHandler(c *gin.Context) {
 }
 
 func (s *Server) GetSensorReadingsMinutesByIdHandler(c *gin.Context) {
-	sensor_id, err := strconv.Atoi(c.Param("id"))
+	sensorID64, err := strconv.ParseInt(c.Param("id"), 10, 32)
+	if err != nil || sensorID64 > math.MaxInt32 || sensorID64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid sensor_id parameter", err)})
+		return
+	}
+	sensor_id := int32(sensorID64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid sensor_id parameter", err)})
 		return
