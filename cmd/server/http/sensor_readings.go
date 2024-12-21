@@ -11,16 +11,6 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-import (
-	"fmt"
-	"net/http"
-	"strconv"
-
-	db "github.com/christoff-linde/pih-core-go/internal/database"
-	"github.com/gin-gonic/gin"
-	"github.com/jackc/pgx/v5/pgtype"
-)
-
 func (s *Server) CreateSensorReadingHandler(c *gin.Context) {
 	var sensorReading db.SensorReading
 
@@ -211,7 +201,8 @@ func (s *Server) GetSensorReadingsMinutesByIdHandler(c *gin.Context) {
 	}
 	if sensorReadings == nil {
 		nextOffset = 0
-	} else if len(sensorReadings) < offset {
+	} else if int32(len(sensorReadings)) < offset {
+
 		nextOffset = 0
 	}
 	resp := gin.H{
@@ -257,7 +248,7 @@ func (s *Server) GetSensorReadingsHourlyByIdHandler(c *gin.Context) {
 	}
 	if sensorReadings == nil {
 		nextOffset = 0
-	} else if len(sensorReadings) < offset {
+	} else if int32(len(sensorReadings)) < offset {
 		nextOffset = 0
 	}
 
@@ -304,7 +295,7 @@ func (s *Server) GetSensorReadingsDailyByIdHandler(c *gin.Context) {
 	}
 	if sensorReadings == nil {
 		nextOffset = 0
-	} else if len(sensorReadings) < offset {
+	} else if int32(len(sensorReadings)) < offset {
 		nextOffset = 0
 	}
 
