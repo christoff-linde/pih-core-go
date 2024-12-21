@@ -1,17 +1,20 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-
 version: 2
 updates:
-  # Enable version updates for golang dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
   - package-ecosystem: "gomod" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-  # Enable version updates for GitHub Actions
-  - package-ecosystem: "github-actions"
-    # Workflow files stored in the default location of `.github/workflows`
-    # You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.
-    directory: "/"
-    schedule:
-      interval: "weekly"
+    labels:
+      - "dependencies"
+    commit-message:
+      # Prefix all commit messages with "npm: "
+      prefix: "chore"
+    reviewers:
+      - "octocat"
+      - "christoff-linde"
+    open-pull-requests-limit: 5
+    versioning-strategy: "increase-if-necessary"
