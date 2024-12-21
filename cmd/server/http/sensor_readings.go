@@ -2,6 +2,17 @@ package http
 
 import (
 	"fmt"
+	"math"
+	"net/http"
+	"strconv"
+
+	db "github.com/christoff-linde/pih-core-go/internal/database"
+	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgtype"
+)
+
+import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -170,8 +181,20 @@ func (s *Server) GetSensorReadingsMinutesByIdHandler(c *gin.Context) {
 		return
 	}
 
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "60"))
-	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
+	limit64, err := strconv.ParseInt(c.DefaultQuery("limit", "60"), 10, 32)
+	if err != nil || limit64 > math.MaxInt32 || limit64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid limit parameter", err)})
+		return
+	}
+	limit := int32(limit64)
+
+	offset64, err := strconv.ParseInt(c.DefaultQuery("offset", "0"), 10, 32)
+	if err != nil || offset64 > math.MaxInt32 || offset64 < math.MinInt32 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprint("Invalid offset parameter", err)})
+		return
+	}
+	offset := int32(offset64)
+
 	nextOffset := offset + limit
 
 	sensorReadings, err := s.db.GetSensorReadingMinutesById(c, db.GetSensorReadingMinutesByIdParams{
