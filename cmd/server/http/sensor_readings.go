@@ -181,6 +181,8 @@ func (s *Server) GetSensorReadingsMinutesByIdHandler(c *gin.Context) {
 	}
 	if sensorReadings == nil {
 		nextOffset = 0
+	} else if len(sensorReadings) < offset {
+		nextOffset = 0
 	}
 	resp := gin.H{
 		"message":   fmt.Sprintf("Found %d sensor_readings", len(sensorReadings)),
@@ -214,6 +216,8 @@ func (s *Server) GetSensorReadingsHourlyByIdHandler(c *gin.Context) {
 	}
 	if sensorReadings == nil {
 		nextOffset = 0
+	} else if len(sensorReadings) < offset {
+		nextOffset = 0
 	}
 
 	resp := gin.H{
@@ -246,6 +250,8 @@ func (s *Server) GetSensorReadingsDailyByIdHandler(c *gin.Context) {
 		return
 	}
 	if sensorReadings == nil {
+		nextOffset = 0
+	} else if len(sensorReadings) < offset {
 		nextOffset = 0
 	}
 
