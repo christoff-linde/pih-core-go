@@ -2,12 +2,31 @@ package http
 
 import (
 	"net/http"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func (s *Server) RegisterRoutes() http.Handler {
 	r := gin.Default()
+
+	corsConfig := cors.New(cors.Config{
+		AllowAllOrigins:           true,
+		AllowMethods:              []string{"GET"},
+		AllowHeaders:              []string{"Origin"},
+		AllowCredentials:          true,
+		ExposeHeaders:             []string{"Content-Length"},
+		MaxAge:                    12 * time.Hour,
+		AllowWildcard:             true,
+		AllowBrowserExtensions:    false,
+		CustomSchemas:             []string{},
+		AllowWebSockets:           false,
+		AllowFiles:                false,
+		OptionsResponseStatusCode: 0,
+	})
+
+	r.Use(corsConfig)
 
 	v1 := r.Group("/v1")
 	sensors := v1.Group("/sensors")
